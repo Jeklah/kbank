@@ -1,0 +1,5 @@
+Transaction Type,Amount,Balance After Transaction
+deposit,500,500
+withdraw,100,400
+crypto,20,420
+cash,50,370
