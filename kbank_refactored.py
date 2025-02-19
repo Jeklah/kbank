@@ -39,7 +39,8 @@ def load_csv(file_name):
     :return: pandas.DataFrame
     """
     try:
-        return pd.read_csv(file_name)
+        with open(file_name, 'r') as file:
+            return pd.read_csv(file)
     except FileNotFoundError:
         return pd.DataFrame(columns=['Transaction Type',
                                      'Amount',
@@ -58,7 +59,8 @@ def save_csv(data, file_name):
     :param file_name: str
     """
     try:
-        data.to_csv(file_name, index=False)
+        with open(file_name, 'w') as file:
+            data.to_csv(file_name, index=False)
         print(f'Data saved to {file_name}')
     except Exception as err:
         print(f'Error saving data: {err}')
@@ -118,10 +120,12 @@ def deposit(data):
     """
     while True:
         try:
-            amount = float(input('Enter the deposit amount: £ '))
+            amount = get_input_in_range(0.01, float('inf'))
+
             if amount > 0:
                 break
             print('Deposit amount must be positive. Please try again.')
+            balance = get_balance(data) + amount
         except ValueError:
             print('Invalid input. Please enter a numeric value.')
 
