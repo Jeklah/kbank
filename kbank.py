@@ -5,6 +5,12 @@ from colorama import Fore
 print(Fore.LIGHTGREEN_EX)
 
 # Banking Program
+# The small edits I've made to the original file are just general best practices
+# such as constants being in capitals, using print() instead of print('\n'),
+# having 2 double clear lines between functions and the main code, etc.
+
+# I've also added one or two comments saying where something could be done
+# better (only to later find realise you have tried to loop it ha. gj.)
 
 # import pandas to run csv, os to delete csv, time to delay input of password
 
@@ -93,7 +99,8 @@ def withdraw(data):
         print()
         amount = float(input('Enter amount you would like to withdraw: £ '))
         # Get the latest balance.
-        balance = 0 if data.empty else float(data.iloc[-1]['Balance After Transaction'].strip('£'))
+        balance = 0 if data.empty else float(
+            data.iloc[-1]['Balance After Transaction'].strip('£'))
         if amount > balance:
             print()
             print('**********************')
