@@ -41,9 +41,13 @@ def load_csv(file_name):
     try:
         return pd.read_csv(file_name)
     except FileNotFoundError:
-        return pd.DataFrame(columns=['Transaction Type', 'Amount', 'Balance After Transaction'])
+        return pd.DataFrame(columns=['Transaction Type',
+                                     'Amount',
+                                     'Balance After Transaction'])
     except pd.errors.EmptyDataError:
-        return pd.DataFrame(columns=['Transaction Type', 'Amount', 'Balance After Transaction'])
+        return pd.DataFrame(columns=['Transaction Type',
+                                     'Amount',
+                                     'Balance After Transaction'])
 
 
 def save_csv(data, file_name):
@@ -87,10 +91,11 @@ def get_balance(data):
 
     :return: float
     """
-    return float(
-        0 if data.empty else data.iloc[-1]['Balance After Transaction'].replace(
-            '£', '')
-    )
+    if not data.empty:
+        # Ensure it's a string
+        balance_str = str(data.iloc[-1]['Balance After Transaction'])
+        return float(balance_str.strip('£')) if balance_str.startswith('£') else float(balance_str)
+    return 0.0
 
 
 def show_balance(data):
@@ -202,12 +207,13 @@ def main():
             print('Transaction History')
             print('No transactions' if data.empty else data)
         elif choice == 5:
-            remove_history()
-            data = pd.DataFrame(
-                columns=['Transaction Type',
-                         'Amount',
-                         'Balance After Transaction']
-            )
+            print('This functionality has been temporarily disabled.')
+            # remove_history()
+            # data = pd.DataFrame(
+            #    columns=['Transaction Type',
+            #             'Amount',
+            #             'Balance After Transaction']
+            # )
         elif choice == 6:
             save_csv(data, CSV_FILE)
             print('Exiting...')
